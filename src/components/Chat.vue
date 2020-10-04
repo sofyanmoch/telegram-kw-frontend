@@ -7,7 +7,7 @@
                         <h4 class="text-left title">Telegram</h4>
                     </b-col>
                     <b-col lg="2" cols="2">
-                        <button>
+                        <button class="btn">
                             <img src="../assets/img/Menu.png" class="text-left">
                         </button>
                     </b-col>

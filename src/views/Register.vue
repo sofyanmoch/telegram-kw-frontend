@@ -3,15 +3,15 @@
         <div class="register">
             <b-row>
                 <b-col lg="12" class="form-register">
-                    <b-row class="px-4">
-                        <b-col lg="1">
-                            <button class="btn pt-5">
-                                <img src="../assets/img/back.png" alt="">
-                            </button>
-                        </b-col>
-                        <b-col lg="11" class="mt-5 title text-center">
-                            <h4>Register</h4>
-                        </b-col>
+                    <b-row class="py-5 px-3">
+                            <b-col lg="1">
+                                <button class="btn">
+                                    <img src="../assets/img/back.png" alt="">
+                                </button>
+                            </b-col>
+                            <b-col lg="10" class="title text-center pt-1">
+                                <h4>Register</h4>
+                            </b-col>
                         <b-col lg="12" class="text-left pt-4">
                             <p>Let’s create your account!</p>
                         </b-col>
