@@ -46,6 +46,12 @@
             <b-col lg="12" class="py-3">
                 <ListChat />
             </b-col>
+            <b-col lg="12" class="py-3">
+                <ListChat />
+            </b-col>
+            <b-col lg="12" class="py-3">
+                <ListChat />
+            </b-col>
         </b-row>
     </div>
 </template>

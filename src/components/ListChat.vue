@@ -16,10 +16,15 @@
                                 </b-col>
                             </b-row>
                         </b-col>
-                        <b-col lg="2" class="py-2">
-                            <b-row class="text-left">
-                                <b-col lg="12">
+                        <b-col lg="2" class="pt-2">
+                            <b-row >
+                                <b-col lg="12" class="text-left">
                                     <p style="text-align:center;">15.20</p>
+                                </b-col>
+                                <b-col lg="12" class="text-right pl-3">
+                                    <div class="notification">
+                                        <p class="text-white" style="text-align:center;">2</p>
+                                    </div>
                                 </b-col>
                             </b-row>
                         </b-col>
@@ -32,5 +37,11 @@
     .message{
         letter-spacing: -0.165px;
         color: #7E98DF;
+    }
+    .notification{
+        width: 20px;
+        height: 20px;
+        background: #7E98DF;
+border-radius: 30px;
     }
 </style>
