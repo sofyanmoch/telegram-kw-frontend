@@ -12,6 +12,8 @@
 <style scoped>
     .empty-chat{
         color: #848484;
-        padding-top: 35%;
+        padding-top: 25%;
+        padding-left: 25%;
+        position: fixed;
     }
 </style>

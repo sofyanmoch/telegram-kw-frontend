@@ -4,41 +4,43 @@
             <b-row>
                 <b-col lg="12" class="form-register">
                     <b-row class="py-5 px-3">
-                            <b-col lg="1">
+                            <b-col lg="1" cols="1">
+                                <router-link to="/login">
                                 <button class="btn">
                                     <img src="../assets/img/back.png" alt="">
                                 </button>
+                                </router-link>
                             </b-col>
-                            <b-col lg="10" class="title text-center pt-1">
+                            <b-col lg="10" cols="10" class="title text-center pt-1">
                                 <h4>Register</h4>
                             </b-col>
                         <b-col lg="12" class="text-left pt-4">
                             <p>Let’s create your account!</p>
                         </b-col>
                         <b-col lg="12">
-                            <form>
+                            <form @submit.prevent="onRegister">
                                  <div class="form-group">
                                     <p class="text-left input-register">Name</p>
-                                    <input type="text" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputPassword1">
                                 </div>
                                 <div class="form-group">
                                     <p class="text-left input-register">Email</p>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input v-model="form.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="form-group">
                                     <p class="text-left input-register">Password</p>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1">
                                 </div>
                                 <button type="submit" class="mb-4 py-2 btn button-register text-white">Register</button>
                             </form>
                         </b-col>
                         <b-col lg="12">
                             <b-row class="py-3">
-                                <b-col lg="3">
+                                <b-col lg="3" cols="3">
                                     <img src="../assets/img/Line 4.png" alt="">
                                 </b-col>
-                                <b-col lg="5" class="text-center mx-2">Register With</b-col>
-                                <b-col lg="3">
+                                <b-col lg="5" cols="5" class="text-center mx-2 regis-with">Register With</b-col>
+                                <b-col lg="3" cols="3">
                                     <img src="../assets/img/Line 4.png" alt="">
                                 </b-col>
                             </b-row>
@@ -54,6 +56,35 @@
         </div>
     </div>
 </template>
+<script>
+import { mapActions } from 'vuex'
+export default {
+  data () {
+    return {
+      form: {
+        email: '',
+        username: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    onRegister () {
+      this.actionsRegister(this.form).then((response) => {
+        alert(response)
+        this.$router.push({
+          path: '/login'
+        })
+      }).catch((err) => {
+        alert(err.message)
+      })
+    },
+    ...mapActions({
+      actionsRegister: 'auth/register'
+    })
+  }
+}
+</script>
 <style scoped>
     .body{
         background: #E5E5E5;
@@ -93,5 +124,17 @@ opacity: 0.75;
     .title{
         letter-spacing: -0.165px;
         color: #7E98DF;
+    }
+    @media only screen and (max-width: 700px) {
+        .register{
+        padding: 0px;
+        }
+        .form-register{
+        background: white;
+        background: #FFFFFF;
+        }
+        .regis-with{
+            font-size:14px;
+        }
     }
 </style>

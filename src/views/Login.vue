@@ -11,26 +11,28 @@
                             <p>Hi, Welcome back!</p>
                         </b-col>
                         <b-col lg="12">
-                            <form>
+                            <form @submit.prevent="onLogin()">
                                 <div class="form-group">
                                     <p class="text-left input-login">Email</p>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input v-model="form.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="form-group">
                                     <p class="text-left input-login">Password</p>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1">
                                 </div>
+                                <router-link to="/reset">
                                 <p class="py-4 forgot-password">Forgot Password?</p>
+                                </router-link>
                                 <button type="submit" class="mb-4 py-2 btn button-login text-white">Login</button>
                             </form>
                         </b-col>
                         <b-col lg="12">
                             <b-row class="py-3">
-                                <b-col lg="4" class="line">
+                                <b-col lg="4" cols="4" class="line">
                                     <img src="../assets/img/Line 4.png" alt="">
                                 </b-col>
-                                <b-col lg="4">Login With</b-col>
-                                <b-col lg="4" class="line">
+                                <b-col lg="4" cols="4">Login With</b-col>
+                                <b-col lg="4" cols="4" class="line">
                                     <img src="../assets/img/Line 4.png" alt="">
                                 </b-col>
                             </b-row>
@@ -41,7 +43,7 @@
                             </button>
                         </b-col>
                         <b-col lg="12" class="text-center py-3">
-                            <p>Don’t have an account? Sign Up</p>
+                            <p>Don’t have an account? <a href="/register">Sign Up</a></p>
                         </b-col>
                     </b-row>
                 </b-col>
@@ -49,6 +51,36 @@
         </div>
     </div>
 </template>
+<script>
+import { mapActions } from 'vuex'
+export default {
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    onLogin () {
+      this.actionLogin(this.form).then((response) => {
+        alert(response)
+        if (response === 'Login success') {
+          window.location = '/chat'
+        } else {
+          return false
+        }
+      }).catch((err) => {
+        alert(err.message)
+      })
+    },
+    ...mapActions({
+      actionLogin: 'auth/login'
+    })
+  }
+}
+</script>
 <style scoped>
     .body{
         background: #E5E5E5;
@@ -88,5 +120,14 @@ opacity: 0.75;
     .title{
         letter-spacing: -0.165px;
         color: #7E98DF;
+    }
+    @media only screen and (max-width: 700px) {
+        .login{
+        padding: 0px;
+        }
+        .form-login{
+        background: white;
+        background: #FFFFFF;
+    }
     }
 </style>
