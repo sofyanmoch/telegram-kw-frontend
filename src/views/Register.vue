@@ -1,38 +1,46 @@
 <template>
     <div class="body container-fluid">
-        <div class="login">
+        <div class="register">
             <b-row>
-                <b-col lg="12" class="form-login">
-                    <b-row class="px-4">
-                        <b-col lg="12" class="pt-5 title">
-                            <h4>Login</h4>
-                        </b-col>
+                <b-col lg="12" class="form-register">
+                    <b-row class="py-5 px-3">
+                            <b-col lg="1" cols="1">
+                                <router-link to="/login">
+                                <button class="btn">
+                                    <img src="../assets/img/back.png" alt="">
+                                </button>
+                                </router-link>
+                            </b-col>
+                            <b-col lg="10" cols="10" class="title text-center pt-1">
+                                <h4>Register</h4>
+                            </b-col>
                         <b-col lg="12" class="text-left pt-4">
-                            <p>Hi, Welcome back!</p>
+                            <p>Let’s create your account!</p>
                         </b-col>
                         <b-col lg="12">
-                            <form @submit.prevent="onLogin()">
+                            <form @submit.prevent="onRegister">
+                                 <div class="form-group">
+                                    <p class="text-left input-register">Name</p>
+                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputPassword1">
+                                </div>
                                 <div class="form-group">
-                                    <p class="text-left input-login">Email</p>
+                                    <p class="text-left input-register">Email</p>
                                     <input v-model="form.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="form-group">
-                                    <p class="text-left input-login">Password</p>
+                                    <p class="text-left input-register">Password</p>
                                     <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1">
                                 </div>
-                                <router-link to="/reset">
-                                <p class="py-4 forgot-password">Forgot Password?</p>
-                                </router-link>
-                                <button type="submit" class="mb-4 py-2 btn button-login text-white">Login</button>
+                                <button type="submit" class="mb-4 py-2 btn button-register text-white">Register</button>
                             </form>
                         </b-col>
                         <b-col lg="12">
                             <b-row class="py-3">
-                                <b-col lg="4" cols="4" class="line">
+                                <b-col lg="3" cols="3">
                                     <img src="../assets/img/Line 4.png" alt="">
                                 </b-col>
-                                <b-col lg="4" cols="4">Login With</b-col>
-                                <b-col lg="4" cols="4" class="line">
+                                <b-col lg="5" cols="5" class="text-center mx-2 regis-with">Register With</b-col>
+                                <b-col lg="3" cols="3">
                                     <img src="../assets/img/Line 4.png" alt="">
                                 </b-col>
                             </b-row>
@@ -41,9 +49,6 @@
                             <button type="button" class="btn button-login-google btn-outline-secondary">
                                 <img src="../assets/img/Group 5792.png" alt="">
                             </button>
-                        </b-col>
-                        <b-col lg="12" class="text-center py-3">
-                            <p>Don’t have an account? <a href="/register">Sign Up</a></p>
                         </b-col>
                     </b-row>
                 </b-col>
@@ -58,25 +63,24 @@ export default {
     return {
       form: {
         email: '',
+        username: '',
         password: ''
       }
     }
   },
   methods: {
-    onLogin () {
-      this.actionLogin(this.form).then((response) => {
+    onRegister () {
+      this.actionsRegister(this.form).then((response) => {
         alert(response)
-        if (response === 'Login success') {
-          window.location = '/chat'
-        } else {
-          return false
-        }
+        this.$router.push({
+          path: '/login'
+        })
       }).catch((err) => {
         alert(err.message)
       })
     },
     ...mapActions({
-      actionLogin: 'auth/login'
+      actionsRegister: 'auth/register'
     })
   }
 }
@@ -87,18 +91,18 @@ export default {
         width: 100%;
         height: 100%;
     }
-    .form-login{
+    .form-register{
         background: white;
         background: #FFFFFF;
 box-shadow: 0px 20px 20px rgba(126, 152, 223, 0.05);
 border-radius: 30px;
     }
-    .input-login{
+    .input-register{
         color: #848484;
 
 opacity: 0.75;
     }
-    .button-login{
+    .button-register{
         background: #7E98DF;
         border-radius: 70px;
         width: 100%;
@@ -107,7 +111,7 @@ opacity: 0.75;
         border-radius: 70px;
         width: 100%;
     }
-    .login{
+    .register{
         padding-top: 10%;
         padding-bottom: 10%;
         padding-right: 35%;
@@ -122,12 +126,15 @@ opacity: 0.75;
         color: #7E98DF;
     }
     @media only screen and (max-width: 700px) {
-        .login{
+        .register{
         padding: 0px;
         }
-        .form-login{
+        .form-register{
         background: white;
         background: #FFFFFF;
-    }
+        }
+        .regis-with{
+            font-size:14px;
+        }
     }
 </style>
