@@ -11,7 +11,7 @@
                             </button>
                             </router-link>
                         </b-col>
-                        <b-col lg="11" cols="11" class="pt-1 title text-center">
+                        <b-col lg="10" cols="10" class="pt-1 title text-center">
                             <h4>Forgot Password</h4>
                         </b-col>
                         <b-col lg="12" class="text-left black pt-4">

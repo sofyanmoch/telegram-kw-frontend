@@ -1,3 +1,4 @@
+<!--
 <template>
         <div>
             <b-row>
@@ -33,7 +34,10 @@
             </b-row>
         </div>
 </template>
+-->
+
 <style scoped>
+/*
     .message{
         letter-spacing: -0.165px;
         color: #7E98DF;
@@ -48,4 +52,5 @@ border-radius: 30px;
         width: 200%;
         height: 70%;
     }
+*/
 </style>
