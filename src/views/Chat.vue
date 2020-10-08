@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid pl-5">
         <b-row>
             <b-col lg="12">
                 <b-row>
@@ -18,17 +18,22 @@
                     </b-col>
                 </b-row>
                 <b-row>
-                    <b-col lg="3">
+                    <b-col lg="3" cols="3">
                         <div class="user-login">
                             <img src="../assets/img/eimi.jpg" alt="">
                         </div>
                     </b-col>
-                    <b-col lg="8" class="text-left py-2">
+                    <b-col lg="5" cols="6" class="text-left py-2">
                         <p>{{username}}</p>
+                    </b-col>
+                    <b-col lg="4" cols="3">
+                        <button class="btn bg-danger tombol text-white mb-0" @click="logout()">
+                           <p style="font-size:14px; text-align:center;">OUT</p>
+                        </button>
                     </b-col>
                 </b-row>
                 <b-row class="pb-4 px-3">
-                    <b-col lg="10" class="search">
+                    <b-col lg="10" cols="10" class="search">
                         <b-row class="py-2">
                             <div class="input-group px-3">
                                 <div class="input-group-prepend">
@@ -40,7 +45,7 @@
                                 </div>
                         </b-row>
                     </b-col>
-                    <b-col lg="2" class="py-2">
+                    <b-col lg="2" cols="2" class="py-2">
                         <button class="btn">
                             <img src="../assets/img/Plus.png" style="text-align:center;">
                         </button>
@@ -49,13 +54,13 @@
             </b-col>
             <b-col lg="12" class="pb-3">
                 <b-row>
-                    <b-col lg="3">
+                    <b-col lg="3" cols="3">
                         <h5 class="pt-2">All</h5>
                     </b-col>
-                    <b-col lg="5" class="important text-white">
+                    <b-col lg="5" cols="5" class="important text-white">
                         <h5 class="pt-2">Important</h5>
                     </b-col>
-                    <b-col lg="4">
+                    <b-col lg="4" cols="4">
                         <h5 class="pt-2">Unread</h5>
                     </b-col>
                 </b-row>
@@ -64,20 +69,20 @@
             <div class="chat-list">
             <b-col lg="12" v-for="(item,index) in listUsers" :key="index">
                     <b-row v-if="username !== item.username">
-                        <b-col lg="2" class="profile-img">
+                        <b-col lg="2" cols="2" class="profile-img">
                             <img src="../assets/img/eimi.jpg">
                         </b-col>
-                        <b-col lg="7" @click="selectUser(item.username)" class="btn">
+                        <b-col lg="7" cols="7" @click="selectUser(item.username)" class="btn">
                             <b-row class="text-left pl-4 pt-1">
-                                <b-col lg="12">
+                                <b-col lg="12" cols="12">
                                     <h6>{{item.username}}</h6>
                                 </b-col>
-                                <b-col lg="12" class="message-look">
+                                <b-col lg="12" cols="12" class="message-look">
                                     <p>Yang??</p>
                                 </b-col>
                             </b-row>
                         </b-col>
-                        <b-col lg="2">
+                        <b-col lg="2" cols="2">
                             <b-row >
                                 <b-col lg="12" class="text-left">
                                     <p style="text-align:center;">15.20</p>
@@ -100,7 +105,7 @@
                         </div>
                         <div v-else>
                             <b-row>
-                            <b-col lg="1" class="my-3">
+                            <b-col lg="1" cols="1" class="my-3">
                                 <div class="profile-chat">
                                     <img src="../assets/img/eimi.jpg">
                                 </div>
@@ -193,6 +198,7 @@
 </template>
 <script>
 import EmptyChat from '../components/EmptyChat'
+import { mapActions } from 'vuex'
 import io from 'socket.io-client'
 
 export default {
@@ -201,7 +207,7 @@ export default {
   },
   data () {
     return {
-      username: this.$route.query.username,
+      username: localStorage.getItem('username'),
       listUsers: [],
       listMessages: [],
       privateMessages: [],
@@ -212,6 +218,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      onLogout: 'auth/logout'
+    }),
+    logout () {
+      this.onLogout().then((response) => {
+        window.location = '/login'
+      })
+    },
     selectUser (username) {
       this.privateMessages = []
       this.listMessages = []
@@ -309,6 +323,7 @@ border-radius: 30px;
     .search {
         background: #FAFAFA;
         border-radius: 15px;
+        outline: none;
     }
     .message{
     height: 60vh;
@@ -333,5 +348,9 @@ border-radius: 30px;
   }
   .chat-to p{
       color: white;
+  }
+  .tombol{
+      width: 50px;
+      height: 30px;
   }
 </style>

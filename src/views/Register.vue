@@ -91,6 +91,15 @@ export default {
         width: 100%;
         height: 100%;
     }
+    .form-group input{
+       position: relative;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #232323;
+    }
     .form-register{
         background: white;
         background: #FFFFFF;

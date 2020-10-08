@@ -64,21 +64,21 @@ export default {
     }
   },
   methods: {
-    onLogin () {
-      this.actionLogin(this.form).then((response) => {
-        console.log(response)
-        if (response === 'Login success') {
-          this.$router.push({ path: '/chat', query: { username: this.form.username } })
-        } else {
-          return false
-        }
-      }).catch((err) => {
-        alert(err.message)
-      })
-    },
     ...mapActions({
       actionLogin: 'auth/login'
-    })
+    }),
+    onLogin () {
+      this.actionLogin(this.form).then((response) => {
+        if (response === 'Login success') {
+          localStorage.setItem('username', this.form.username)
+          window.location = '/chat'
+        } else {
+          alert(response)
+        }
+      }).catch((response) => {
+        console.log(response)
+      })
+    }
   }
 }
 </script>
@@ -113,6 +113,15 @@ opacity: 0.75;
         padding-bottom: 10%;
         padding-right: 35%;
         padding-left: 35%;
+    }
+    .form-group input{
+       position: relative;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #232323;
     }
     .forgot-password{
         color: #7E98DF;
