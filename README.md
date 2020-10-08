@@ -1,5 +1,18 @@
 # apps-chat
+Hello everyone, this is my project week 9 in bootcamp.
+This app was develop using Vue js, socket.io and backend using node js & expres js
 
+# Feature
+- Register
+- Login
+- Forgot Password (soon)
+- Private Chat
+- Sharelock (soon)
+- Update Profile image (soon)
+- add Friend (soon)
+
+
+# Screenshot
 - Login Page
 
 ![Login](https://user-images.githubusercontent.com/58968418/95143819-4ee9b400-07a1-11eb-91b4-39428c57b146.PNG)
