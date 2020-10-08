@@ -29,6 +29,9 @@ This app was develop using Vue js, socket.io and backend using node js & expres 
 
 ![Chat](https://user-images.githubusercontent.com/58968418/95143814-4d1ff080-07a1-11eb-8d8b-910c5175743e.PNG)
 
+![Chat friends](https://user-images.githubusercontent.com/58968418/95411977-1b01c080-0952-11eb-861a-fc6204cbc91f.PNG)
+
+
 ## Project setup
 ```
 npm install
