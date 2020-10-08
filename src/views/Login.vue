@@ -13,8 +13,8 @@
                         <b-col lg="12">
                             <form @submit.prevent="onLogin()">
                                 <div class="form-group">
-                                    <p class="text-left input-login">Email</p>
-                                    <input v-model="form.email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <p class="text-left input-login">Username</p>
+                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="form-group">
                                     <p class="text-left input-login">Password</p>
@@ -66,9 +66,9 @@ export default {
   methods: {
     onLogin () {
       this.actionLogin(this.form).then((response) => {
-        alert(response)
+        console.log(response)
         if (response === 'Login success') {
-          this.$router.push({ path: '/chat', query: { email: this.form.email } })
+          this.$router.push({ path: '/chat', query: { username: this.form.username } })
         } else {
           return false
         }
