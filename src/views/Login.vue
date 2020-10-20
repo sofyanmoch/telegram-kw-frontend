@@ -13,12 +13,10 @@
                         <b-col lg="12">
                             <form @submit.prevent="onLogin()">
                                 <div class="form-group">
-                                    <p class="text-left input-login">Username</p>
-                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <p class="text-left input-login">Password</p>
-                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                 </div>
                                 <router-link to="/reset">
                                 <p class="py-4 forgot-password">Forgot Password?</p>
@@ -52,6 +50,7 @@
     </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 import { mapActions } from 'vuex'
 export default {
   data () {
@@ -73,7 +72,11 @@ export default {
           localStorage.setItem('username', this.form.username)
           window.location = '/chat'
         } else {
-          alert(response)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${response}`
+          })
         }
       }).catch((response) => {
         console.log(response)

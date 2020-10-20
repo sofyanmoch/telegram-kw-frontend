@@ -7,29 +7,36 @@
                         <b-row>
             <div class="chat-header">
             <b-col lg="12">
-                <b-row class="py-4 px-3">
-                    <b-col lg="10" cols="10">
+                <b-row class="pt-4 px-3">
+                    <b-col lg="9" cols="10">
                         <h4 class="text-left title">Telegram</h4>
                     </b-col>
-                    <b-col lg="2" cols="2">
-                        <button class="btn">
+                    <b-col lg="3" cols="2">
+                        <b-col class="text-right text-white">
+                        <b-dropdown id="dropdown-dropleft" dropleft text="Drop-Left" variant="violet" >
+                            <template v-slot:button-content>
+                            <b-icon-justify-left class="icon"></b-icon-justify-left>
+                            </template>
+                            <div class="dropdown-setting">
+                            <b-dropdown-item v-b-toggle.sidebar-profile><b-icon-gear class="mr-3 "></b-icon-gear> Setting</b-dropdown-item>
+                            <b-dropdown-item><b-icon-person class="mr-3"></b-icon-person> Contacts</b-dropdown-item>
+                            <b-dropdown-item><b-icon-telephone class="mr-3"></b-icon-telephone> Calls</b-dropdown-item>
+                            <b-dropdown-item><b-icon-bookmark class="mr-3"></b-icon-bookmark> Save messages</b-dropdown-item>
+                            <b-dropdown-item><b-icon-person-plus class="mr-3"></b-icon-person-plus> Invite Friends</b-dropdown-item>
+                            <b-dropdown-item><b-icon-question-circle class="mr-3"></b-icon-question-circle> ArkaChat FAQ</b-dropdown-item>
+                            <b-dropdown-item @click="logout()" ><b-icon-box-arrow-right class="mr-3"></b-icon-box-arrow-right> Logout</b-dropdown-item>
+                            </div>
+                        </b-dropdown>
+                        </b-col>
+                        <Profile />
+                        <!-- <button class="btn">
                             <img src="../assets/img/Menu.png" class="text-left">
-                        </button>
+                        </button> -->
                     </b-col>
                 </b-row>
                 <b-row>
-                    <b-col lg="3" cols="3">
-                        <div class="user-login">
-                            <img src="../assets/img/eimi.jpg" alt="">
-                        </div>
-                    </b-col>
-                    <b-col lg="5" cols="6" class="text-left py-2">
-                        <p>{{username}}</p>
-                    </b-col>
-                    <b-col lg="4" cols="3">
-                        <button class="btn bg-danger tombol text-white mb-0" @click="logout()">
-                           <p style="font-size:14px; text-align:center;">OUT</p>
-                        </button>
+                    <b-col lg="12" cols="12" class="mx-3 text-left py-2">
+                        <h4>@{{username}}</h4>
                     </b-col>
                 </b-row>
                 <b-row class="pb-4 px-3">
@@ -69,16 +76,16 @@
             <div class="chat-list">
             <b-col lg="12" v-for="(item,index) in listUsers" :key="index">
                     <b-row v-if="username !== item.username">
-                        <b-col lg="2" cols="2" class="profile-img">
-                            <img src="../assets/img/eimi.jpg">
+                        <b-col lg="2" cols="2">
+                            <div class="profile-image" :style="`background-image: url(http://localhost:3008/${item.image});`"></div>
                         </b-col>
-                        <b-col lg="7" cols="7" @click="selectUser(item.username)" class="btn">
+                        <b-col lg="7" cols="7" @click="selectUser(item.username, item.image, item.online)" class="btn">
                             <b-row class="text-left pl-4 pt-1">
                                 <b-col lg="12" cols="12">
                                     <h6>{{item.username}}</h6>
                                 </b-col>
                                 <b-col lg="12" cols="12" class="message-look">
-                                    <p>Yang??</p>
+                                    <p @click="cek(item.id)">Lorem ...</p>
                                 </b-col>
                             </b-row>
                         </b-col>
@@ -106,24 +113,22 @@
                         <div v-else>
                             <b-row>
                             <b-col lg="1" cols="1" class="my-3">
-                                <div class="profile-chat">
-                                    <img src="../assets/img/eimi.jpg">
+                                <div class="profile-chat" :style="`background-image: url(http://localhost:3008/${imgReceiver});`">
                                 </div>
                             </b-col>
                             <b-col lg="2" class="mt-4">
                                 <b-row class="text-left">
-                                    <!-- <div  v-if="userReceiver === null"> -->
-                                    <!-- <b-col lg="12" class="ml-3"> -->
-                                        <!-- <h5>Select User</h5> -->
-                                    <!-- </b-col> -->
-                                    <!-- </div> -->
-                                    <!-- <div  v-else> -->
                                     <b-col lg="12">
                                         <h5>{{userReceiver}}</h5>
                                     </b-col>
                                     <!-- </div> -->
                                     <b-col lg="12" class="online text-left">
-                                      <p>Online</p>
+                                    <div v-if="statusReceiver === 0 || statusReceiver === null ">
+                                      <p style="color:red;">Offline</p>
+                                    </div>
+                                    <div v-else>
+                                        <p style="color:green;">Online</p>
+                                    </div>
                                     </b-col>
                                 </b-row>
                             </b-col>
@@ -198,15 +203,19 @@
 </template>
 <script>
 import EmptyChat from '../components/EmptyChat'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import io from 'socket.io-client'
+import Profile from '../components/Profile'
 
 export default {
   components: {
-    EmptyChat
+    EmptyChat,
+    Profile
   },
   data () {
     return {
+      usersData: JSON.parse(localStorage.getItem('datauser')),
+      detailUser: JSON.parse(localStorage.getItem('detail')),
       username: localStorage.getItem('username'),
       listUsers: [],
       listMessages: [],
@@ -214,22 +223,35 @@ export default {
       historyMessages: [],
       message: '',
       userReceiver: null,
+      imgReceiver: null,
+      statusReceiver: null,
       socket: io('http://localhost:3008')
     }
   },
+  computed: {
+    ...mapGetters({
+      detailUser: 'auth/getDetailUser'
+    })
+  },
   methods: {
     ...mapActions({
-      onLogout: 'auth/logout'
+      onLogout: 'auth/logout',
+      onGetDetail: 'auth/getDetailUser'
     }),
+    cek (id) {
+      alert(id)
+    },
     logout () {
       this.onLogout().then((response) => {
         window.location = '/login'
       })
     },
-    selectUser (username) {
+    selectUser (username, image, online) {
       this.privateMessages = []
       this.listMessages = []
       this.userReceiver = username
+      this.imgReceiver = image
+      this.statusReceiver = online
       this.getPrivateMessages()
       this.socket.emit('get-history-message', {
         sender: this.username,
@@ -277,6 +299,7 @@ export default {
       }
     })
     this.getHistoryMessages()
+    this.onGetDetail(this.usersData.id)
   }
 }
 </script>
@@ -303,15 +326,25 @@ export default {
         background: #7E98DF;
 border-radius: 30px;
     }
-    .profile-img img{
+    .profile-img {
         width: 64px;
         height: 64px;
         border-radius: 10px;
     }
-    .profile-chat img{
-        width: 64px;
+    .profile-chat {
+        /* width: 64px;
         height: 64px;
-        border-radius: 15px;
+        border-radius: 15px; */
+        width: 50px;
+  background-size: cover;
+  height: 50px;
+  border-radius: 70px;
+    }
+    .profile-image{
+        width: 50px;
+  background-size: cover;
+  height: 50px;
+  border-radius: 70px;
     }
     .online p{
         letter-spacing: -0.165px;
@@ -352,5 +385,9 @@ border-radius: 30px;
   .tombol{
       width: 50px;
       height: 30px;
+  }
+  .dropdown-setting{
+      background: #7E98DF;
+border-radius: 35px 10px 35px 35px;
   }
 </style>
