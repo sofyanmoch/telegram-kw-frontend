@@ -13,12 +13,10 @@
                         <b-col lg="12">
                             <form @submit.prevent="onLogin()">
                                 <div class="form-group">
-                                    <p class="text-left input-login">Email</p>
-                                    <input v-model="form.email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <p class="text-left input-login">Password</p>
-                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                 </div>
                                 <router-link to="/reset">
                                 <p class="py-4 forgot-password">Forgot Password?</p>
@@ -52,6 +50,7 @@
     </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 import { mapActions } from 'vuex'
 export default {
   data () {
@@ -64,21 +63,25 @@ export default {
     }
   },
   methods: {
-    onLogin () {
-      this.actionLogin(this.form).then((response) => {
-        alert(response)
-        if (response === 'Login success') {
-          this.$router.push({ path: '/chat', query: { email: this.form.email } })
-        } else {
-          return false
-        }
-      }).catch((err) => {
-        alert(err.message)
-      })
-    },
     ...mapActions({
       actionLogin: 'auth/login'
-    })
+    }),
+    onLogin () {
+      this.actionLogin(this.form).then((response) => {
+        if (response === 'Login success') {
+          localStorage.setItem('username', this.form.username)
+          window.location = '/chat'
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${response}`
+          })
+        }
+      }).catch((response) => {
+        console.log(response)
+      })
+    }
   }
 }
 </script>
@@ -113,6 +116,15 @@ opacity: 0.75;
         padding-bottom: 10%;
         padding-right: 35%;
         padding-left: 35%;
+    }
+    .form-group input{
+       position: relative;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #232323;
     }
     .forgot-password{
         color: #7E98DF;

@@ -20,16 +20,13 @@
                         <b-col lg="12">
                             <form @submit.prevent="onRegister">
                                  <div class="form-group">
-                                    <p class="text-left input-register">Name</p>
-                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.username" type="text" class="form-control" id="exampleInputPassword1" placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <p class="text-left input-register">Email</p>
-                                    <input v-model="form.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input v-model="form.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
                                 </div>
                                 <div class="form-group">
-                                    <p class="text-left input-register">Password</p>
-                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1">
+                                    <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                 </div>
                                 <button type="submit" class="mb-4 py-2 btn button-register text-white">Register</button>
                             </form>
@@ -58,6 +55,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import Swal from 'sweetalert2'
 export default {
   data () {
     return {
@@ -71,10 +69,23 @@ export default {
   methods: {
     onRegister () {
       this.actionsRegister(this.form).then((response) => {
-        alert(response)
-        this.$router.push({
-          path: '/login'
-        })
+        console.log(response)
+        if (response === 'Email already exist' || response === 'Username already exist') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${response}`
+          })
+        } else {
+          Swal.fire(
+            'Good job!',
+            'Success Register! Redirecting to login page',
+            'success'
+          )
+          this.$router.push({
+            path: '/login'
+          })
+        }
       }).catch((err) => {
         alert(err.message)
       })
@@ -90,6 +101,15 @@ export default {
         background: #E5E5E5;
         width: 100%;
         height: 100%;
+    }
+    .form-group input{
+       position: relative;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #232323;
     }
     .form-register{
         background: white;
