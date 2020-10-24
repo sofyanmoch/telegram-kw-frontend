@@ -16,14 +16,14 @@
 import * as VueGoogleMaps from 'vue2-google-maps'
 
 export default {
-  name: 'Home',
+  name: 'Map',
   components: {
     'google-maps': VueGoogleMaps.Map
   }
 }
 </script>
 <style scoped>
-.maps{
+.maps {
   width: 100%;
   height: 300px;
   align-content: center;

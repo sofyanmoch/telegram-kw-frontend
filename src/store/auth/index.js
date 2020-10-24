@@ -1,4 +1,5 @@
 import axios from 'axios'
+// import { resolve } from 'core-js/fn/promise'
 import { URL } from '../../helper/env'
 
 const state = () => {
@@ -70,6 +71,31 @@ const actions = {
         localStorage.setItem('detail', JSON.stringify(result.data.data[0]))
       }).catch((err) => {
         console.log(err)
+      })
+    })
+  },
+  updateProfile (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.patch(`${URL}/api/users/edit/${payload.id}`, {
+        fullname: payload.fullname,
+        phone: payload.phone,
+        bio: payload.bio,
+        username: payload.username
+      }).then((result) => {
+        resolve(result.data.message)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
+  },
+  updateImage (context, payload) {
+    return new Promise((resolve, reject) => {
+      const fd = new FormData()
+      fd.append('image', payload.image)
+      axios.patch(`${URL}/api/users/edit/${payload.id}`, fd).then((response) => {
+        resolve(response.data.message)
+      }).catch((err) => {
+        reject(err.message)
       })
     })
   }

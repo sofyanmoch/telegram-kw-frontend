@@ -215,7 +215,7 @@ export default {
   data () {
     return {
       usersData: JSON.parse(localStorage.getItem('datauser')),
-      detailUser: JSON.parse(localStorage.getItem('detail')),
+      //   detailUser: JSON.parse(localStorage.getItem('detail')),
       username: localStorage.getItem('username'),
       listUsers: [],
       listMessages: [],
@@ -299,7 +299,10 @@ export default {
       }
     })
     this.getHistoryMessages()
-    this.onGetDetail(this.usersData.id)
+    this.onGetDetail(this.usersData.id).then((result) => {
+      const dataOld = result
+      this.username = dataOld.username
+    })
   }
 }
 </script>
