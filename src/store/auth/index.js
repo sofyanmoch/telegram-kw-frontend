@@ -94,8 +94,10 @@ const actions = {
       fd.append('image', payload.image)
       axios.patch(`${URL}/api/users/edit/${payload.id}`, fd).then((response) => {
         resolve(response.data.message)
+        console.log(response.data.message)
       }).catch((err) => {
-        reject(err.message)
+        reject(err)
+        console.log(err.response)
       })
     })
   }

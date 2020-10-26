@@ -94,8 +94,8 @@
 
     <div>
       <b-modal id="modal-edit" hide-footer sm hide-header centered>
-        <b-col lg="12">
-          <b-row>
+        <!-- <b-col lg="12">
+          <b-row> -->
             <b-col lg="12">
               <h4 class="my-4">Edit Profile</h4>
             </b-col>
@@ -112,8 +112,8 @@
                 </div>
               </b-col>
               <b-col lg="12">
-                <b-row>
-                  <b-col lg="6">
+                <!-- <b-row> -->
+                  <!-- <b-col lg="6">
                     <div class="form-group">
                       <label>Username</label>
                       <input
@@ -123,8 +123,8 @@
                         placeholder="Masukan nama lengkap"
                       />
                     </div>
-                  </b-col>
-                  <b-col lg="6">
+                  </b-col> -->
+                  <!-- <b-col lg="12"> -->
                     <div class="form-group">
                       <label>Phone Number</label>
                       <input
@@ -134,8 +134,8 @@
                         placeholder="Masukan nama lengkap"
                       />
                     </div>
-                  </b-col>
-                </b-row>
+                  <!-- </b-col> -->
+                <!-- </b-row> -->
               </b-col>
               <b-col lg="12">
                 <div class="form-group">
@@ -152,8 +152,8 @@
             <b-col lg="12" class="text-right">
               <button class="btn" @click="saveDataUser()">Save</button>
             </b-col>
-          </b-row>
-        </b-col>
+          <!-- </b-row>
+        </b-col> -->
       </b-modal>
     </div>
   </div>
@@ -198,11 +198,11 @@ export default {
     saveDataUser () {
       this.users.id = this.detailuser.id
       this.updateUser(this.users).then((response) => {
-        if (response === 'Users Updated') {
+        if (response === 'Update success') {
           Swal.fire('Good job!', 'Success Update Users', 'success')
-          setTimeout(() => {
-            window.location = 'chat'
-          }, 2000)
+          // setTimeout(() => {
+          //   window.location = 'chat'
+          // }, 2000)
         } else {
           Swal.fire({
             icon: 'error',
